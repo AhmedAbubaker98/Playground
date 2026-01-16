@@ -12,6 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      # === DEBUG STEP ===
+      - name: Debug File Structure
+        run: |
+          echo "Listing root files:"
+          ls -la
+          echo "Listing public folder:"
+          ls -la public/ || echo "Public folder not found!"
+      # ==================
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
