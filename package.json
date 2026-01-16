@@ -1,0 +1,16 @@
+{
+  "name": "kintsugi-playground",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
