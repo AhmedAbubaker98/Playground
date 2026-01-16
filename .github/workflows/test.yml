@@ -26,12 +26,12 @@ jobs:
         run: |
           npm start & 
           npx playwright test
-        continue-on-error: true # Ensure we proceed to upload artifacts even if tests fail
+        # REMOVE the 'continue-on-error' line. 
+        # We WANT this to fail if the test fails.
 
-      # THIS IS WHAT KINTSUGI NEEDS TO DOWNLOAD
       - name: Upload Playwright Artifacts
         uses: actions/upload-artifact@v4
-        if: always() # Run this even if tests fail
+        if: failure() # Only upload if the previous step FAILED
         with:
           name: playwright-report
           path: playwright-report/
