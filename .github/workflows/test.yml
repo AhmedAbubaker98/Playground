@@ -41,8 +41,10 @@ jobs:
 
       - name: Upload Playwright Artifacts
         uses: actions/upload-artifact@v4
-        if: failure() # Only upload if the previous step FAILED
+        if: always()
         with:
           name: playwright-report
-          path: playwright-report/
+          path: |
+             playwright-report/
+             test-results/
           retention-days: 1

@@ -5,8 +5,7 @@ module.exports = defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
-    // CRITICAL: Take screenshot when a test fails
-    screenshot: 'only-on-failure', 
+    screenshot: 'on', 
     video: 'retain-on-failure',
   },
   webServer: {
