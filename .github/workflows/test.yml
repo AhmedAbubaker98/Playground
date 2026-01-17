@@ -32,7 +32,6 @@ jobs:
 
       - name: Start App & Run Tests
         run: |
-          npm start & 
           npx playwright test
 
 

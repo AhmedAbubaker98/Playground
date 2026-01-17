@@ -11,6 +11,7 @@ module.exports = defineConfig({
   webServer: {
     command: 'npm start',
     port: 3000,
+    timeout: 120 * 1000, // Give it time to boot
     reuseExistingServer: true,
   },
 });
