@@ -13,14 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # === DEBUG STEP ===
       - name: Debug File Structure
         run: |
           echo "Listing root files:"
           ls -la
           echo "Listing public folder:"
           ls -la public/ || echo "Public folder not found!"
-      # ==================
 
       - uses: actions/setup-node@v4
         with:
@@ -36,8 +34,7 @@ jobs:
         run: |
           npm start & 
           npx playwright test
-        # REMOVE the 'continue-on-error' line. 
-        # We WANT this to fail if the test fails.
+
 
       - name: Upload Playwright Artifacts
         uses: actions/upload-artifact@v4

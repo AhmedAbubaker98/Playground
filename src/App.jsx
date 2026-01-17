@@ -7,8 +7,7 @@ export default function App() {
       <p>Please sign in to continue.</p>
       
       {/* 
-         BREAKING CHANGE: 
-         The class was changed from 'btn-blue' to 'btn-primary' 
+
       */}
       <button className="btn-primary" id="submit-button">
         Sign In
