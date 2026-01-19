@@ -15,5 +15,5 @@ describe('Calculator', () => {
 
   test('calculateDiscount should work with decimal discounts', () => {
     expect(calculateDiscount(50, 15)).toBe(7.5);
-  });
+  }); 
 });
