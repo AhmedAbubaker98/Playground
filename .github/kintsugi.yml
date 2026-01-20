@@ -1,0 +1,20 @@
+name: Kintsugi CI
+
+version: 1
+
+branches:
+  allow: ["main", "develop"]
+  ignore: ["dependabot/**"]
+
+limits:
+  max_attempts: 3
+  max_files_changed: 2
+
+security:
+  protected_paths:
+    - ".github/**"
+    - "package.json"
+
+ai:
+  mode: "smart"
+  extra_instructions: "Comment a fun message under the PR ONLY if all checks pass."
