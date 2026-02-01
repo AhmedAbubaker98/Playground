@@ -67,7 +67,7 @@ ai:
   # Model selection
   # "fast"  = Gemini Flash (faster, cheaper, good for simple fixes)
   # "smart" = Gemini Pro (slower, more expensive, better reasoning)
-  mode: "smart"
+  mode: "fast"
   
   # Custom instructions for the AI (optional)
   # Guide the AI's decision-making for your specific project
