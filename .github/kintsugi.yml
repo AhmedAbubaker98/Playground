@@ -11,7 +11,7 @@ demo_password: "kintsugi-gemini3-demo-2026"
 
 # ============================================
 # Branch Filtering
-# ===========================================
+# ============================================
 branches:
   # Branches where Kintsugi will operate
   allow:
