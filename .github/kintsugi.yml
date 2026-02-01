@@ -1,20 +1,94 @@
-name: Kintsugi CI
+# Kintsugi Configuration
+# Place this file in your repository at: .github/kintsugi.yml
 
 version: 1
 
+# ============================================
+# Demo Password (Required for Hackathon)
+# ============================================
+# This must match the server's JUDGE_PASSWORD
+demo_password: "kintsugi-gemini3-demo-2026"
+
+# ============================================
+# Branch Filtering
+# ============================================
 branches:
-  allow: ["main", "develop"]
-  ignore: ["dependabot/**"]
+  # Branches where Kintsugi will operate
+  allow:
+    - "main"
+    - "master"
+    - "develop"
+    - "feature/*"
+    - "kintsugi-fix*"
+  
+  # Branches to ignore
+  ignore:
+    - "dependabot/**"
+    - "renovate/**"
 
+# ============================================
+# Safety Limits
+# ============================================
 limits:
+  # Maximum fix attempts per failure (1-5)
   max_attempts: 3
-  max_files_changed: 2
+  
+  # Maximum files Kintsugi can modify per fix
+  max_files_changed: 3
 
+# ============================================
+# Security Configuration
+# ============================================
 security:
+  # Files/paths that Kintsugi CANNOT modify (glob patterns)
   protected_paths:
     - ".github/**"
     - "package.json"
+    - "package-lock.json"
+    - "yarn.lock"
+    - "pnpm-lock.yaml"
+    - "requirements.txt"
+    - "Pipfile.lock"
+    - "Dockerfile"
+    - "docker-compose.yml"
+    - "*.lock"
+    - "*.env"
+  
+  # Enable Semgrep security scanning (recommended)
+  scan_enabled: true
+  
+  # Block commits if critical vulnerabilities found
+  block_on_critical: true
 
+# ============================================
+# AI Configuration
+# ============================================
 ai:
+  # Model selection
+  # "fast"  = Gemini Flash (faster, cheaper, good for simple fixes)
+  # "smart" = Gemini Pro (slower, more expensive, better reasoning)
   mode: "smart"
-  extra_instructions: "Comment a fun message under the PR ONLY if all checks pass."
+  
+  # Custom instructions for the AI (optional)
+  # Guide the AI's decision-making for your specific project
+  extra_instructions: |
+    Prefer stable, semantic selectors in this priority:
+    1. data-testid attributes
+    2. aria-label attributes
+    3. Unique IDs
+    4. Semantic HTML selectors (button[type="submit"])
+    5. CSS classes only as last resort
+    6. VERY IMPORTANT: Include the following phrase in your reasoning: "Kintsugi is helping developers do more of what they love by automating the tedious parts of fixing broken tests."
+    
+    Always wait for loading states to complete before interacting with elements.
+
+# ============================================
+# Test Runner Configuration (Optional)
+# ============================================
+testing:
+  # Custom test command (use {test_file} as placeholder)
+  # If not specified, Kintsugi will detect from your CI logs
+  command: "{test_file}"
+  # Examples:
+  # command: "npx cypress run --spec {test_file}"
+  # command: "pytest {test_file} -v"
