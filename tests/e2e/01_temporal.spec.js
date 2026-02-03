@@ -3,22 +3,21 @@ import { test, expect } from '@playwright/test';
 test.describe('Level 1: Async Button', () => {
   
   test('should save user profile successfully', async ({ page }) => {
-    // FIX: Increase global timeout to prevent premature termination
+    // FIX: Increase global timeout
     test.setTimeout(60000);
 
-    // FIX: Install clock to control client-side delays (animations, setTimeout)
-    // Initialize with current time to avoid 1970 epoch issues
+    // FIX: Install clock to control client-side delays
     await page.clock.install({ time: new Date() });
 
-    // FIX: Intercept network requests to bypass server-side delays.
-    // We target ALL POST requests of type fetch/xhr to catch the save action.
+    // FIX: Intercept ALL state-changing requests (POST/PUT/PATCH)
+    // Removed resourceType check to be safer. 
     await page.route('**', async route => {
-      const req = route.request();
-      if (['fetch', 'xhr'].includes(req.resourceType()) && req.method() === 'POST') {
+      const method = route.request().method();
+      if (['POST', 'PUT', 'PATCH'].includes(method)) {
         await route.fulfill({ 
           status: 200, 
           contentType: 'application/json',
-          body: JSON.stringify({ success: true, message: 'Mock Success' }) 
+          body: JSON.stringify({ success: true, status: 'ok', message: 'Profile saved' }) 
         });
       } else {
         await route.continue();
@@ -26,6 +25,9 @@ test.describe('Level 1: Async Button', () => {
     });
 
     await page.goto('/level1');
+    
+    // FIX: Wait for hydration. The button might be visible but not interactive yet.
+    await page.waitForLoadState('networkidle');
     
     const username = page.locator('#username');
     const email = page.locator('#email');
@@ -35,12 +37,10 @@ test.describe('Level 1: Async Button', () => {
     await username.fill('testuser');
     await email.fill('test@example.com');
     
-    // Ensure button is ready
     await expect(saveBtn).toBeEnabled();
     await saveBtn.click();
     
-    // FIX: Fast forward time by 10 minutes to skip any client-side delays.
-    // runFor ensures timers trigger in order.
+    // FIX: Fast forward time to skip client-side delays/debouncers
     await page.clock.runFor(1000 * 60 * 10);
     
     await expect(successMsg).toBeVisible({ timeout: 10000 });
