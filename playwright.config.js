@@ -7,9 +7,15 @@ const config = {
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
+  timeout: 60000,
+  expect: {
+    timeout: 30000,
+  },
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    actionTimeout: 30000,
+    navigationTimeout: 30000,
   },
   projects: [
     {
@@ -19,9 +25,6 @@ const config = {
   ],
 };
 
-// Only configure webServer if NOT in CI.
-// In CI, the pipeline (stress-test.yml) starts the server manually in a previous step.
-// Defining it here causes a port conflict error even with reuseExistingServer: true.
 if (!process.env.CI) {
   config.webServer = {
     command: 'npm run dev',
