@@ -6,7 +6,8 @@ describe('Calculator', () => {
   });
 
   test('calculateTotal should handle decimal values', () => {
-    expect(calculateTotal(12.99, 3)).toBe(38.97);
+    // Floating point arithmetic requires approximate comparison
+    expect(calculateTotal(12.99, 3)).toBeCloseTo(38.97);
   });
 
   test('calculateDiscount should calculate percentage correctly', () => {
