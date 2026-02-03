@@ -1,5 +1,5 @@
 function calculateTotal(price, quantity) {
-  return price + quantity;
+  return price * quantity;
 }
 
 function calculateDiscount(price, discountPercent) {
