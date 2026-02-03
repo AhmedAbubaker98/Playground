@@ -6,7 +6,8 @@ describe('Calculator', () => {
   });
 
   test('calculateTotal should handle decimal values', () => {
-    expect(calculateTotal(12.99, 3)).toBe(38.97);
+    // Use toBeCloseTo to handle floating point precision issues
+    expect(calculateTotal(12.99, 3)).toBeCloseTo(38.97);
   });
 
   test('calculateDiscount should calculate percentage correctly', () => {
@@ -14,6 +15,7 @@ describe('Calculator', () => {
   });
 
   test('calculateDiscount should work with decimal discounts', () => {
-    expect(calculateDiscount(50, 15)).toBe(7.5);
+    // Use toBeCloseTo to handle floating point precision issues
+    expect(calculateDiscount(50, 15)).toBeCloseTo(7.5);
   }); 
 });
