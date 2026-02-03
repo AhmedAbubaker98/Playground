@@ -16,7 +16,7 @@ branches:
 
 # Minimal limits - let Kintsugi work freely
 limits:
-  max_attempts: 3
+  max_attempts: 10
   max_files_changed: 5
 
 # Security - ENABLED to test Level 4
