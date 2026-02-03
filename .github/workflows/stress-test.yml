@@ -1,0 +1,50 @@
+name: Kintsugi Gauntlet
+
+on:
+  push:
+    branches: [main, master, kintsugi-fix*]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  gauntlet:
+    name: Run The Gauntlet
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start Test Server
+        run: npm run dev &
+        env:
+          PORT: 3000
+
+      - name: Wait for Server
+        run: npx wait-on http://localhost:3000 --timeout 30000
+
+      - name: Run Gauntlet Tests
+        run: npm test
+
+      - name: Upload Artifacts on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gauntlet-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7

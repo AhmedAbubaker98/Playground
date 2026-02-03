@@ -1,15 +1,22 @@
 {
-  "name": "playground",
+  "name": "kintsugi-gauntlet",
   "version": "1.0.0",
-  "description": "Simple test repo with intentional bug",
-  "main": "src/calculator.js",
+  "description": "The Ultimate Kintsugi Stress Test - 4 Levels of Pain",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "dev": "node src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["kintsugi", "e2e", "playwright", "stress-test"],
+  "author": "Kintsugi Team",
+  "license": "MIT",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
