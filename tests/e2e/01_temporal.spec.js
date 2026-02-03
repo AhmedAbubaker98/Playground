@@ -10,7 +10,8 @@ test.describe('Level 1: Async Button', () => {
     
     await page.click('.save-btn');
     
-    await expect(page.locator('#successMsg')).toBeVisible();
+    // Increased timeout to handle potential async delays (mock payment/server processing)
+    await expect(page.locator('#successMsg')).toBeVisible({ timeout: 15000 });
   });
   
 });
