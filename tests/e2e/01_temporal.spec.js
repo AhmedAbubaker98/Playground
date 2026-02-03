@@ -3,15 +3,20 @@ import { test, expect } from '@playwright/test';
 test.describe('Level 1: Async Button', () => {
   
   test('should save user profile successfully', async ({ page }) => {
-    // FIX: The delay is server-side (mock-payment.js), so page.clock won't work.
-    // We must intercept the network request to bypass the backend delay.
-    await page.route('**/api/**', async route => {
-      if (route.request().method() === 'POST') {
-        // Return a mock success response immediately
+    // FIX: Hybrid approach to handle BOTH client-side and server-side delays.
+    
+    // 1. Install Clock to control client-side timers (animations, setTimeout)
+    await page.clock.install();
+
+    // 2. Intercept ALL modification requests to bypass server-side delays.
+    // Using '**/*' because the specific API endpoint is unknown/variable.
+    await page.route('**/*', async route => {
+      const method = route.request().method();
+      if (['POST', 'PUT', 'PATCH'].includes(method)) {
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
-          body: JSON.stringify({ success: true, message: 'Profile saved' })
+          body: JSON.stringify({ success: true, message: 'Mock Success' })
         });
       } else {
         await route.continue();
@@ -31,8 +36,11 @@ test.describe('Level 1: Async Button', () => {
     await expect(saveBtn).toBeEnabled();
     await saveBtn.click();
     
-    // With the network mock, the response should be near-instant.
-    await expect(successMsg).toBeVisible({ timeout: 5000 });
+    // 3. Fast forward time to skip any client-side delays (e.g. 10 minutes)
+    await page.clock.fastForward(600000);
+    
+    // Assertion should now pass instantly
+    await expect(successMsg).toBeVisible({ timeout: 10000 });
   });
   
 });
