@@ -55,7 +55,7 @@ export default defineConfig({
   // CI workflow starts the server separately, so always reuse existing server
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000', 
     reuseExistingServer: true,
     timeout: 30000,
   },

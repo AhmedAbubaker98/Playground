@@ -7,6 +7,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { readFileSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -82,12 +83,12 @@ app.get('/level1', (req, res) => {
           <div class="spinner"></div>
         </button>
       </form>
-      <div class="success-message" id="successMsg">✓ Profile saved successfully!</div>
+      <div class="success-message" id="saveSuccess">✓ Profile saved successfully!</div>
       
       <script>
         const form = document.getElementById('profileForm');
         const btn = document.getElementById('saveButton');
-        const successMsg = document.getElementById('successMsg');
+        const successMsg = document.getElementById('saveSuccess');
         
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
@@ -110,15 +111,15 @@ app.get('/level1', (req, res) => {
 });
 
 // ============================================
-// Level 2: Dynamic Modal Page (Chaos CSS)
+// Level 2: Dynamic Modal Page (CSS Class Mismatch)
 // ============================================
 app.get('/level2', (req, res) => {
-  // Generate random class names to simulate CSS-in-JS obfuscation
-  const randomClass = () => Math.random().toString(36).substring(2, 8);
-  const modalClass = `modal-${randomClass()}`;
-  const overlayClass = `overlay-${randomClass()}`;
-  const acceptBtnClass = `btn-${randomClass()}`;
-  const cancelBtnClass = `btn-${randomClass()}`;
+  // BUG: The test uses .modal-overlay but the actual class is 'modal-backdrop'
+  // The test uses .modal-accept-btn but the actual class is 'accept-terms-btn'
+  const modalClass = 'terms-modal';
+  const overlayClass = 'modal-backdrop';  // Test expects: modal-overlay
+  const acceptBtnClass = 'accept-terms-btn';  // Test expects: modal-accept-btn  
+  const cancelBtnClass = 'decline-terms-btn';
   
   res.send(`
     <!DOCTYPE html>
@@ -316,29 +317,17 @@ app.get('/level3', (req, res) => {
   `);
 });
 
-// Serve the buggy currency-math.js
+// Serve the actual currency-math.js file from disk
+// This allows Kintsugi to fix the bug by modifying src/logic/currency-math.js
 app.get('/logic/currency-math.js', (req, res) => {
   res.type('application/javascript');
-  res.send(`
-    /**
-     * Currency calculation utilities
-     */
-    
-    export function calculateTotal(subtotal, taxRate) {
-      // Calculate tax amount
-      const tax = subtotal * taxRate;
-      
-      // BUG: String concatenation instead of addition!
-      // This converts to string before "adding"
-      const total = String(subtotal) + tax;
-      
-      return total;
-    }
-    
-    export function formatCurrency(amount) {
-      return '$' + Number(amount).toFixed(2);
-    }
-  `);
+  try {
+    const filePath = join(__dirname, 'logic', 'currency-math.js');
+    const content = readFileSync(filePath, 'utf-8');
+    res.send(content);
+  } catch (e) {
+    res.status(500).send('// Error loading currency-math.js');
+  }
 });
 
 // ============================================
@@ -467,9 +456,9 @@ app.post('/api/payment', (req, res) => {
 
 // Intentionally broken token validation
 function validateToken(token) {
-  // BUG: This always returns false because the comparison is wrong
-  // The expected token format should be validated properly
-  const expectedPrefix = 'test_';
+  // BUG: Expects 'valid_' prefix but test sends 'test_' prefix
+  // Kintsugi should fix the test to use the correct token format
+  const expectedPrefix = 'valid_';
   return token.startsWith(expectedPrefix) && token.length > 10;
 }
 
