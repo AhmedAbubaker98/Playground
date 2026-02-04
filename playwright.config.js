@@ -39,7 +39,7 @@ export default defineConfig({
     // CRITICAL: Capture video on first retry
     // This is how Kintsugi sees temporal issues
     video: 'on-first-retry',
-    
+     
     // Capture screenshot on failure
     screenshot: 'only-on-failure',
   },
