@@ -33,7 +33,7 @@ export default defineConfig({
     // Base URL for the test server
     baseURL: 'http://localhost:3000',
     
-    // Capture trace on first retry
+    // Capture trace on first retry 
     trace: 'on-first-retry',
     
     // CRITICAL: Capture video on first retry
