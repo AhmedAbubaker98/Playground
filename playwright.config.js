@@ -41,7 +41,7 @@ export default defineConfig({
     video: 'on-first-retry',
      
     // Capture screenshot on failure
-    screenshot: 'only-on-failure',
+    screenshot: 'only-on-failure', 
   },
 
   projects: [
