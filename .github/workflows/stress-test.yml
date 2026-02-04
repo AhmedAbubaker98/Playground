@@ -2,7 +2,10 @@ name: Kintsugi Gauntlet
 
 on:
   push:
-    branches: "**"
+    branches:
+      - main
+      - master
+      - 'kintsugi-fix*'
   pull_request:
     branches: [main, master]
 
