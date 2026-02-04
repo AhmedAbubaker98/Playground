@@ -12,7 +12,7 @@
  * @returns {string} Total price formatted as string
  */
 export function calculateTotal(subtotal, taxRate) {
-  // Calculate tax amount
+  // Calculate tax amount 
   const tax = subtotal * taxRate;
   
   // Add tax to subtotal
