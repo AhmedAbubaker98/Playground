@@ -6,7 +6,7 @@ test.describe('Level 1: Async Button', () => {
     await page.goto('/level1');
     
     await page.fill('#username', 'testuser');
-    await page.fill('#email', 'test@example.com'); 
+    await page.fill('#email', 'test@example.com');
     
     await page.click('.save-btn');
     
