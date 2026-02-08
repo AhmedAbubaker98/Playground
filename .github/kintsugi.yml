@@ -1,7 +1,7 @@
 # Kintsugi Configuration
 version: 1
 # Master toggle - set to false to temporarily disable Kintsugi
-enabled: true
+enabled: false
 # Demo password for hackathon
 demo_password: "kintsugi-gemini3-demo-2026"
 # Clean up .kintsugi folder after PR is created (won't be merged into main)
@@ -18,8 +18,10 @@ branches:
 limits:
   max_attempts: 10
   max_files_changed: 5
+  max_import_depth: 5  # Parse imports up to 5 levels deep
 
-# Security - ENABLED to test Level 4
+
+# Security 
 security:
   protected_paths:
     - ".github/**"
@@ -35,3 +37,6 @@ ai:
     This is the Kintsugi Gauntlet stress test.
     Use all available evidence: video, screenshots, and deep code analysis.
     The bugs are intentionally difficult - trust the evidence.
+
+updates:
+  mode: transparent  # Show live status on draft PR, use "silent" for no updates
