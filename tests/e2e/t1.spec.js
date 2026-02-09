@@ -8,9 +8,11 @@ test.describe('Level 1: Async Button', () => {
     await page.fill('#username', 'testuser');
     await page.fill('#email', 'test@example.com');
     
-    await page.click('.save-btn');
+    // Wait for the button to be ready (text changes) to avoid clicking the loading spinner
+    await page.getByRole('button', { name: 'Save Changes' }).click();
     
-    await expect(page.locator('#successMsg')).toBeVisible();
+    // Use text locator since the ID #successMsg appears to be incorrect or missing
+    await expect(page.getByText('✓ Profile saved successfully!')).toBeVisible();
   });
   
 });
