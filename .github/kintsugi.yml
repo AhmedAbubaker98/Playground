@@ -13,6 +13,7 @@ branches:
     - "main"
     - "master"
     - "kintsugi-fix*"
+    - "feat/BestFeatureEver"
 
 # Minimal limits - let Kintsugi work freely
 limits:
