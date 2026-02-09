@@ -18,6 +18,8 @@ test.describe('Level 3: Checkout Calculation', () => {
     
     await checkout.goto();
     await checkout.clickCheckout();
+
+    
     
     // Verify confirmation appears
     const isConfirmed = await checkout.isConfirmationVisible();

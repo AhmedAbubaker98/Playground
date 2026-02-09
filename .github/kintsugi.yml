@@ -1,14 +1,14 @@
 # Kintsugi Configuration
 version: 1
 # Master toggle - set to false to temporarily disable Kintsugi
-enabled: false
+enabled: true
 # Demo password for hackathon
 demo_password: "kintsugi-gemini3-demo-2026"
 # Clean up .kintsugi folder after PR is created (won't be merged into main)
 cleanup_metadata: true 
 
 # Branch configuration
-branches:
+branches: 
   allow:
     - "main"
     - "master"
