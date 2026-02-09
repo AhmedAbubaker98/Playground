@@ -31,7 +31,7 @@ export async function processPayment(paymentData, authToken) {
   // Validate auth
   if (!validateToken(authToken)) {
     throw new Error('Invalid or expired token');
-  }
+  } 
   
   const { cardNumber, amount } = paymentData;
   

@@ -7,9 +7,9 @@ test.describe('Level 2: Dynamic Modal', () => {
     
     await page.click('#showModal');
     
-    await expect(page.locator('.modal-overlay')).toBeVisible();
+    await expect(page.locator('.modal-backdrop')).toBeVisible();
     
-    await page.click('.modal-accept-btn');
+    await page.click('.accept-terms-btn');
     
     await expect(page.locator('#result')).toHaveText('✓ Terms Accepted');
   });

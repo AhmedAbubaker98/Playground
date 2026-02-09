@@ -6,7 +6,7 @@ on:
       - main
       - master
       - 'kintsugi-fix*'
-  pull_request:
+  pull_request: 
     branches: [main, master]  
 
 jobs:
