@@ -16,7 +16,7 @@ export function calculateTotal(subtotal, taxRate) {
   const tax = subtotal * taxRate;
   
   // Add tax to subtotal
-  const total = String(subtotal) + tax;
+  const total = subtotal + tax;
   
   return total;
 }

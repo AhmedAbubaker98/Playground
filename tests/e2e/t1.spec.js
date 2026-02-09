@@ -8,9 +8,10 @@ test.describe('Level 1: Async Button', () => {
     await page.fill('#username', 'testuser');
     await page.fill('#email', 'test@example.com');
     
-    await page.click('.save-btn');
+    // Use role-based selector to wait for button to finish loading
+    await page.getByRole('button', { name: 'Save Changes' }).click();
     
-    await expect(page.locator('#successMsg')).toBeVisible();
+    await expect(page.locator('#saveSuccess')).toBeVisible();
   });
   
 });
